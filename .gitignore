@@ -1,0 +1,16 @@
+
+# Market Data
+data/raw
+data/processed
+
+#Trained models
+models/
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Environments
+.env
+.venv/
