@@ -1,16 +1,29 @@
 
-# Market Data
-data/raw
-data/processed
+# Original market data
+/raw_data/
 
-#Trained models
-models/
+# Generated datasets (retain directory placeholders only)
+/data/interim/*
+!/data/interim/.gitkeep
+/data/processed/*
+!/data/processed/.gitkeep
 
-# Python
+# Trained models (retain directory placeholder only)
+/models/*
+!/models/.gitkeep
+
+# Python and Jupyter
 __pycache__/
-*.pyc
+*.py[cod]
 .ipynb_checkpoints/
 
-# Environments
+# Environments and secrets
 .env
 .venv/
+venv/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
