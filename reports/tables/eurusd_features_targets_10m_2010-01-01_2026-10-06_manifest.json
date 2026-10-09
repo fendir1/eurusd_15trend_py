@@ -1,0 +1,151 @@
+{
+  "status": "PASS_WITH_COVERAGE_WARNINGS",
+  "pipeline_version": "03_features_and_targets_v1",
+  "created_at_utc": "2026-10-09T01:23:01.441537+00:00",
+  "instrument_config": {
+    "symbol": "EURUSD",
+    "asset_class": "fx",
+    "source": "dukascopy",
+    "price_increment": 1e-05,
+    "reporting_unit": 0.0001,
+    "reporting_unit_name": "pip",
+    "bar_minutes": 1,
+    "forecast_horizon_minutes": 10,
+    "timezone": "UTC",
+    "market_calendar": "fx_24_5"
+  },
+  "feature_settings": {
+    "bar_minutes": 1,
+    "reporting_unit_price": 0.0001,
+    "return_lookback_minutes": [
+      1,
+      5,
+      10
+    ],
+    "volatility_lookback_minutes": [
+      30,
+      60
+    ],
+    "activity_lookback_minutes": 30,
+    "volatility_ddof": 0
+  },
+  "target_settings": {
+    "primary_horizon_minutes": 10,
+    "auxiliary_horizon_minutes": 5,
+    "volatility_window_minutes": 60,
+    "volatility_multiplier": 1.0,
+    "spread_multiplier": 1.0,
+    "band_units": "simple_return_basis_points",
+    "direction_encoding": {
+      "DOWN": -1,
+      "FLAT": 0,
+      "UP": 1
+    }
+  },
+  "column_roles": {
+    "model_inputs": [
+      "log_return_1m",
+      "log_return_5m",
+      "log_return_10m",
+      "log_return_std_30m",
+      "log_return_std_60m",
+      "bar_log_range",
+      "bar_log_body",
+      "bar_close_location",
+      "bar_zero_range",
+      "spread_mean_relative",
+      "spread_max_relative",
+      "spread_close_relative",
+      "log_tick_rate",
+      "tick_activity_relative_30m",
+      "tick_imbalance"
+    ],
+    "targets_and_label_audit": [
+      "target_log_return_5m",
+      "target_return_bps_5m",
+      "target_log_return_10m",
+      "target_return_bps_10m",
+      "neutral_band_bps",
+      "target_direction_10m"
+    ],
+    "metadata": [
+      "minute_start",
+      "decision_time",
+      "target_time",
+      "auxiliary_target_time",
+      "segment_id"
+    ]
+  },
+  "source": {
+    "relative_path": "data\\interim\\eurusd_1min_2010-01-01_2026-10-06.parquet",
+    "sha256": "fa99a74a336058e8135af1a6814a3966c0402180b7834b4b181e0dcb920095cc",
+    "build_summary_relative_path": "reports\\tables\\eurusd_1min_2010-01-01_2026-10-06_build_summary.json",
+    "build_summary_sha256": "f66d0b7ab472def1246db7aed6708f8a925c7f44df1fa8951ca62ee7b3580153",
+    "observed_bars": 6206712,
+    "recorded_gap_count": 15222,
+    "isolated_missing_clock_hours": 676
+  },
+  "output": {
+    "relative_path": "data\\processed\\eurusd_features_targets_10m_2010-01-01_2026-10-06.parquet",
+    "sha256": "bbb8fb6244421bba5f755fd974a5e5bec52211493db4628a5982a5b37e29409f",
+    "row_value_checksum": "122ccb200852651042b72b638395d0aed4d216db31890484d7e4730c1172a9a8",
+    "rows": 5672911,
+    "columns": 26,
+    "size_bytes": 935486126,
+    "first_decision_time_utc": "2010-01-01T01:01:00+00:00",
+    "last_decision_time_utc": "2026-10-06T20:29:00+00:00",
+    "excluded_source_rows": 533801,
+    "required_preceding_history_bars": 60,
+    "schema": {
+      "minute_start": "timestamp[ms, tz=UTC]",
+      "decision_time": "timestamp[us, tz=UTC]",
+      "target_time": "timestamp[us, tz=UTC]",
+      "auxiliary_target_time": "timestamp[us, tz=UTC]",
+      "segment_id": "int32",
+      "log_return_1m": "double",
+      "log_return_5m": "double",
+      "log_return_10m": "double",
+      "log_return_std_30m": "double",
+      "log_return_std_60m": "double",
+      "bar_log_range": "double",
+      "bar_log_body": "double",
+      "bar_close_location": "double",
+      "bar_zero_range": "int8",
+      "spread_mean_relative": "double",
+      "spread_max_relative": "double",
+      "spread_close_relative": "double",
+      "log_tick_rate": "double",
+      "tick_activity_relative_30m": "double",
+      "tick_imbalance": "double",
+      "target_log_return_5m": "double",
+      "target_return_bps_5m": "double",
+      "target_log_return_10m": "double",
+      "target_return_bps_10m": "double",
+      "neutral_band_bps": "double",
+      "target_direction_10m": "int8"
+    }
+  },
+  "neutral_band_formula": "max(10000 * expm1(volatility_multiplier * historical_log_return_std * sqrt(primary_horizon_bars)), 10000 * spread_multiplier * closing_spread_relative)",
+  "validation": {
+    "feature_reconstruction": true,
+    "future_data_causality_test": true,
+    "gap_isolation_test": true,
+    "full_feature_validation": true,
+    "target_endpoint_checks": true,
+    "eligibility_reconciliation": true,
+    "full_export_readback": true,
+    "row_value_checksum_match": true
+  },
+  "limitations_and_next_stage_rules": [
+    "Coverage warnings remain; missing source hours were not repaired.",
+    "Band multipliers are initial settings, not optimized parameters.",
+    "Square-root-of-time volatility scaling is an approximation.",
+    "Targets are gross midpoint returns, not executable trade P&L.",
+    "FLAT is a movement label, not an automatic NO TRADE decision.",
+    "Only model_inputs may enter the model feature matrix.",
+    "Fit preprocessing and models using training data only.",
+    "Use chronological splits and purge labels overlapping boundaries.",
+    "Select settings on training/validation data; freeze before holdout.",
+    "Execution simulation and probability calibration are not implemented."
+  ]
+}
