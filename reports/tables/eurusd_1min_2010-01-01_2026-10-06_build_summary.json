@@ -1,0 +1,83 @@
+{
+  "status": "PASS_WITH_COVERAGE_WARNINGS",
+  "created_at_utc": "2026-10-09T00:39:27.320636+00:00",
+  "instrument_config": {
+    "symbol": "EURUSD",
+    "asset_class": "fx",
+    "source": "dukascopy",
+    "price_increment": 1e-05,
+    "reporting_unit": 0.0001,
+    "reporting_unit_name": "pip",
+    "bar_minutes": 1,
+    "forecast_horizon_minutes": 10,
+    "timezone": "UTC",
+    "market_calendar": "fx_24_5"
+  },
+  "dataset": {
+    "relative_path": "data\\interim\\eurusd_1min_2010-01-01_2026-10-06.parquet",
+    "size_bytes": 464239322,
+    "source_files": 14,
+    "raw_rows_read": 410107313,
+    "overlap_rows_removed": 16105,
+    "unique_ticks": 410091208,
+    "observed_bars": 6206712,
+    "columns": 30,
+    "first_tick_utc": "2010-01-01T00:00:03.964000+00:00",
+    "last_tick_utc": "2026-10-06T23:59:54.159000+00:00",
+    "first_bar_utc": "2010-01-01T00:00:00+00:00",
+    "last_bar_utc": "2026-10-06T23:59:00+00:00",
+    "locked_quotes": 2359,
+    "maximum_spread_units": 34.4
+  },
+  "coverage": {
+    "gap_count": 15222,
+    "missing_bar_slots": 2610408,
+    "isolated_missing_clock_hours": 676,
+    "original_hour_manifest_reconciled": true
+  },
+  "validation": {
+    "core_checks": {
+      "Schema matches": true,
+      "Column count": true,
+      "Saved row count": true,
+      "No missing core values": true,
+      "Chronological bars": true,
+      "Unique timestamps": true,
+      "Aligned bar timestamps": true,
+      "Availability timing": true,
+      "Positive tick counts": true,
+      "Tick reconciliation": true,
+      "Coverage boundaries": true,
+      "Partial file absent": true
+    },
+    "bar_violation_counts": {
+      "Non-finite numeric values": 0,
+      "Invalid mid OHLC": 0,
+      "Invalid bid OHLC": 0,
+      "Invalid ask OHLC": 0,
+      "Invalid tick counts": 0,
+      "Invalid spread statistics": 0,
+      "open midpoint mismatch": 0,
+      "open spread mismatch": 0,
+      "close midpoint mismatch": 0,
+      "close spread mismatch": 0,
+      "Tick imbalance mismatch": 0,
+      "Tick rate mismatch": 0,
+      "Negative quote volumes": 0
+    }
+  },
+  "feature_and_target_rules": [
+    "Use only information available at prediction time.",
+    "Do not forward-fill prices across coverage gaps.",
+    "Require exact timestamps for lagged observations.",
+    "Require continuity across each required lookback window.",
+    "Require continuity across each target window.",
+    "Read the forecast horizon from instrument configuration."
+  ],
+  "audit_reports": {
+    "canonical_sources": "reports\\tables\\eurusd_1min_2010-01-01_2026-10-06_canonical_sources.csv",
+    "gap_inventory": "reports\\tables\\eurusd_1min_2010-01-01_2026-10-06_gap_inventory.csv",
+    "gap_summary": "reports\\tables\\eurusd_1min_2010-01-01_2026-10-06_gap_summary.csv",
+    "missing_hour_manifest": "reports\\tables\\eurusd_1min_2010-01-01_2026-10-06_missing_hour_manifest.csv"
+  }
+}
